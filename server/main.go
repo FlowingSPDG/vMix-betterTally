@@ -1,37 +1,41 @@
 package main
 
 import (
-<<<<<<< Updated upstream
-=======
 	"encoding/json"
 	"encoding/xml"
 	"net/http"
 
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
->>>>>>> Stashed changes
+	"github.com/olahol/melody"
 	"github.com/sirupsen/logrus"
 
+	vmixgo "github.com/FlowingSPDG/vmix-go"
 	vmix "github.com/FlowingSPDG/vmix-go-TCP"
 )
 
 var (
-	vm = *&vmix.Vmix{}
+	vm = &vmix.Vmix{}
+	m  = &melody.Melody{}
 )
 
 func init() {
 	logrus.Debugln("START...")
 
 	var err error // Declare error to avoid "vm" var's shadowing
-	vm, err = vmix.New()
+	vm, err = vmix.New("localhost")
+	if err != nil {
+		panic(err)
+	}
+
+	// Subscribe tally event
+	_, err = vm.SUBSCRIBE("TALLY")
 	if err != nil {
 		panic(err)
 	}
 }
 
 func main() {
-<<<<<<< Updated upstream
-=======
 	r := gin.Default()
 	m = melody.New()
 
@@ -68,16 +72,18 @@ func main() {
 	})
 
 	// register callback
-	vm.RegisterTallyCallback(func(res *vmixtcp.TallyResponse) {
-		msg := make(map[string]vmixtcp.TallyStatus)
+	vm.RegisterTallyCallback(func(res *vmix.TallyResponse) {
+		msg := make(map[string]vmix.TallyStatus)
 		_, body, err := vm.XML()
 		if err != nil {
-			// handle error
+			logrus.Debugf("Failed to get XML : %v\n", err)
+			return
 		}
 		v := vmixgo.Vmix{}
 		err = xml.Unmarshal([]byte(body), &v)
 		if err != nil {
-			// handle error
+			logrus.Debugf("Failed to unmarshal XML : %v\n", err)
+			return
 		}
 
 		logrus.Debugln("TALLY STATUS :", res.Status)
@@ -91,10 +97,14 @@ func main() {
 		}
 		b, err := json.Marshal(msg)
 		if err != nil {
-			// handle error
+			logrus.Debugf("Failed to marshal XML : %v\n", err)
+			return
 		}
-		m.Broadcast(b)
+		if err := m.Broadcast(b); err != nil {
+			logrus.Debugf("Failed to Broadcast data : %v\n", err)
+			return
+		}
 	})
->>>>>>> Stashed changes
 
+	r.Run(":5000")
 }
