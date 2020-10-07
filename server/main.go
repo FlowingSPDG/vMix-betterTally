@@ -45,7 +45,7 @@ func main() {
 		http.ServeFile(c.Writer, c.Request, "index.html")
 	})
 
-	r.GET("/inputs", func(c *gin.Context) {
+	r.GET("/api/inputs", func(c *gin.Context) {
 		_, body, err := vm.XML()
 		if err != nil {
 			// handle error
@@ -58,7 +58,7 @@ func main() {
 		c.JSON(http.StatusOK, v.Inputs.Input)
 	})
 
-	r.GET("/ws", func(c *gin.Context) {
+	r.GET("/api/ws", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
 
