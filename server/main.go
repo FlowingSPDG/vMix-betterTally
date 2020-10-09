@@ -49,12 +49,13 @@ func main() {
 	r.GET("/api/inputs", func(c *gin.Context) {
 		_, body, err := vm.XML()
 		if err != nil {
-			// handle error
+			c.AbortWithError(http.StatusInternalServerError, err)
+			return
 		}
 		v := vmixgo.Vmix{}
-		err = xml.Unmarshal([]byte(body), &v)
-		if err != nil {
-			// handle error
+		if err := xml.Unmarshal([]byte(body), &v); err != nil {
+			c.AbortWithError(http.StatusInternalServerError, err)
+			return
 		}
 		c.JSON(http.StatusOK, v.Inputs.Input)
 	})
@@ -64,11 +65,12 @@ func main() {
 	})
 
 	m.HandleConnect(func(s *melody.Session) {
+		// Sync tally status
 		// m.Broadcast(msg)
 	})
 
 	m.HandleMessage(func(s *melody.Session, msg []byte) {
-		// m.Broadcast(msg)
+		// DO NOTHING
 	})
 
 	// register callback
@@ -106,5 +108,7 @@ func main() {
 		}
 	})
 
-	r.Run(":5000")
+	if err := r.Run(":5000"); err != nil {
+		panic(err)
+	}
 }
