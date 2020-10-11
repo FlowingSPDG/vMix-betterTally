@@ -47,7 +47,7 @@ func main() {
 	r.Use(static.Serve("/fonts", static.LocalFile("./static/fonts", false)))
 
 	r.GET("/api/inputs", func(c *gin.Context) {
-		_, body, err := vm.XML()
+		body, err := vm.XML()
 		if err != nil {
 			c.AbortWithError(http.StatusInternalServerError, err)
 			return
@@ -76,7 +76,7 @@ func main() {
 	// register callback
 	vm.RegisterTallyCallback(func(res *vmix.TallyResponse) {
 		msg := make(map[string]vmix.TallyStatus)
-		_, body, err := vm.XML()
+		body, err := vm.XML()
 		if err != nil {
 			logrus.Debugf("Failed to get XML : %v\n", err)
 			return
