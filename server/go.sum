@@ -2,6 +2,8 @@ github.com/FlowingSPDG/vmix-go v0.0.0-20200905024737-caeecc58bc11 h1:bo6nVQOmcEe
 github.com/FlowingSPDG/vmix-go v0.0.0-20200905024737-caeecc58bc11/go.mod h1:bBYHp25o1N4nG7Y9CPP4/i3wR/ZU6Le1arounGFTV8c=
 github.com/FlowingSPDG/vmix-go-TCP v0.0.0-20201007032345-dd91c3996feb h1:ajUExXFIk9cqG7m83LsXitzgpQd/9uUbykZzCaEXRCY=
 github.com/FlowingSPDG/vmix-go-TCP v0.0.0-20201007032345-dd91c3996feb/go.mod h1:9CUm9j6FmYh42bgoXNEcMDGjAObP6aeX5kiF1A5iIyQ=
+github.com/FlowingSPDG/vmix-go-TCP v0.0.0-20201011164937-acecf361fa94 h1:dbPowC+Htnu2K9RarWXaMChs4wz/SncbcJ6SsDIj92Q=
+github.com/FlowingSPDG/vmix-go-TCP v0.0.0-20201011164937-acecf361fa94/go.mod h1:9CUm9j6FmYh42bgoXNEcMDGjAObP6aeX5kiF1A5iIyQ=
 github.com/c-bata/go-prompt v0.2.3/go.mod h1:VzqtzE2ksDBcdln8G7mk2RX9QyGjH+OVqOCSiVIqS34=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
